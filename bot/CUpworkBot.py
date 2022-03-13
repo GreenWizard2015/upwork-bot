@@ -23,12 +23,11 @@ class CUpworkBot:
     pass
   
   def help(self, update, context):
-    # TODO: Provide monitoring interval
-    update.message.reply_text('''Send me URLs to upwork's search and I'll monitor them for new jobs (every ?? minutes)
+    update.message.reply_text('''Send me URLs to upwork's search and I'll monitor them for new jobs (every %d minutes)
 Commands:
 /stop - stop monitoring.
 /refresh - force update.
-    ''')
+    ''' % (self._configs.RefreshIntervalMinutes, ))
     return
   
   @run_async

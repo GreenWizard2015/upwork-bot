@@ -1,3 +1,4 @@
 {
-  "TelegramToken": ""
+  "TelegramToken": "",
+  "RefreshIntervalMinutes": 5
 }

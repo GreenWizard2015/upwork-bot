@@ -5,6 +5,7 @@ class CPageMonitor(object):
     self._tasks = {
       # UUID: task
     }
+    self._interval = configs.RefreshIntervalMinutes
     return
   
   def stop(self, UUID):
