@@ -40,10 +40,11 @@ Commands:
     )
     
     try:
-      # TODO: If message contains some upwork's urls, than bind them and begun monitoring
       cmd = env.command
       if 'refresh' == cmd: return self.refresh(env)
       if 'stop' == cmd: return self.stop(env)
+      
+      if self.startLinksMonitoring(env): return
       
       env.send('Unknown command. See /help')
     except Exception as e:
@@ -63,3 +64,19 @@ Commands:
     self._scraper.stop(env.userUUID)
     env.send('Scraping is stopped! No links for scraping.')
     return
+  
+  def startLinksMonitoring(self, env):
+    message = env.message
+    # TODO: Extract links from message
+    links = []
+    if links:
+      self._scraper.start(env.userUUID, links, self._notifyUser(env))
+      env.send('Start watching: \n' + '\n'.join(links))
+      return True
+    return False
+  
+  def _notifyUser(self, env):
+    # TODO: Impl. user notification
+    def onJob(jobs):
+      return
+    return onJob
