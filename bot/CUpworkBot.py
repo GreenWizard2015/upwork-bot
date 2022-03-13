@@ -22,6 +22,7 @@ class CUpworkBot:
     pass
   
   def help(self, update, context):
+    # TODO: Add help    
     update.message.reply_text('''Commands:
     ''')
     return
@@ -35,6 +36,9 @@ class CUpworkBot:
     )
     
     try:
+      # TODO: If message contains some upwork's urls, than bind them and begun monitoring
+      # TODO: Add /stop command
+      # TODO: Add /refresh command
       cmd = env.command
       env.send('Unknown command. See /help')
     except Exception as e:

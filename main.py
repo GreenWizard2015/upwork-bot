@@ -20,6 +20,7 @@ def main():
   configs = ConfigBuilder().parse_config('configs.json')
 
   updater = Updater(configs.TelegramToken, use_context=True)
+  # TODO: Create some mechanism for async monitoring
   bot = CUpworkBot(configs=configs)
   bot.bind(updater.dispatcher)
   updater.dispatcher.add_error_handler(error)
