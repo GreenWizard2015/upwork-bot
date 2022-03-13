@@ -38,10 +38,19 @@ class CUpworkBot:
     try:
       # TODO: If message contains some upwork's urls, than bind them and begun monitoring
       # TODO: Add /stop command
-      # TODO: Add /refresh command
       cmd = env.command
+      if 'refresh' == cmd: return self.refresh(env)
+      
       env.send('Unknown command. See /help')
     except Exception as e:
       env.send('Error: %s' % e)
       raise e
+    return
+
+  def refresh(self, env):
+    links = env.read('links', [])
+    if not links:
+      env.send('No links for scraping.')
+      return
+    # TODO: Trigger update event of scraper for current user
     return
