@@ -52,11 +52,9 @@ Commands:
     return
 
   def refresh(self, env):
-    links = env.read('links', [])
-    if not links:
+    if not self._scraper.refresh(env.userUUID):
       env.send('No links for scraping.')
       return
-    # TODO: Trigger update event of scraper for current user
     return
 
   def stop(self, env):

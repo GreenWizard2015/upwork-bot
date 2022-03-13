@@ -18,3 +18,9 @@ class CPageMonitor(object):
       'updated': -1
     }
     return
+  
+  def refresh(self, UUID):
+    if UUID in self._tasks:
+      self._tasks[UUID]['updated'] = -1
+      return True
+    return False
