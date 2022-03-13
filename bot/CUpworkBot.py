@@ -5,8 +5,9 @@ from telegram.ext.dispatcher import run_async
 from bot.CEnvironment import CEnvironment
 
 class CUpworkBot:
-  def __init__(self, configs):
-    self.configs = configs
+  def __init__(self, configs, scraper):
+    self._configs = configs
+    self._scraper = scraper
     return
   
   def bind(self, dp):
@@ -30,7 +31,7 @@ class CUpworkBot:
   @run_async
   def process(self, update, context):
     env = CEnvironment(
-      configs=self.configs,
+      configs=self._configs,
       update=update,
       context=context
     )

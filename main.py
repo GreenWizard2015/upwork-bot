@@ -4,6 +4,7 @@ import logging
 from telegram.ext import Updater
 from python_json_config import ConfigBuilder
 from bot.CUpworkBot import CUpworkBot
+from Core.CPageMonitor import CPageMonitor
 
 logging.basicConfig(
   format='%(asctime)s - %(levelname)s - %(message)s',
@@ -20,8 +21,11 @@ def main():
   configs = ConfigBuilder().parse_config('configs.json')
 
   updater = Updater(configs.TelegramToken, use_context=True)
-  # TODO: Create some mechanism for async monitoring
-  bot = CUpworkBot(configs=configs)
+
+  bot = CUpworkBot(
+    configs=configs,
+    scraper=CPageMonitor(configs=configs)
+  )
   bot.bind(updater.dispatcher)
   updater.dispatcher.add_error_handler(error)
 
