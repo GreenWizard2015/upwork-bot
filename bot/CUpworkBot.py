@@ -38,9 +38,9 @@ class CUpworkBot:
     
     try:
       # TODO: If message contains some upwork's urls, than bind them and begun monitoring
-      # TODO: Add /stop command
       cmd = env.command
       if 'refresh' == cmd: return self.refresh(env)
+      if 'stop' == cmd: return self.stop(env)
       
       env.send('Unknown command. See /help')
     except Exception as e:
@@ -54,4 +54,9 @@ class CUpworkBot:
       env.send('No links for scraping.')
       return
     # TODO: Trigger update event of scraper for current user
+    return
+
+  def stop(self, env):
+    self._scraper.stop(env.userUUID)
+    env.send('Scraping is stopped! No links for scraping.')
     return
