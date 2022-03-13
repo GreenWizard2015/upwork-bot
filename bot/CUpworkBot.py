@@ -73,7 +73,12 @@ Commands:
     return False
   
   def _notifyUser(self, env):
-    # TODO: Impl. user notification
-    def onJob(jobs):
+    def callback(jobs):
+      # TODO: Impl. old jobs tracking
+      oldJobs = []
+      newJobs = [x for x in jobs if not(x.uuid in oldJobs)]
+      oldJobs.extend([x.uuid for x in newJobs])
+      
+      env.send('New jobs: \n' + '\n'.join([[x.asShortText() for x in newJobs]]))
       return
-    return onJob
+    return callback
