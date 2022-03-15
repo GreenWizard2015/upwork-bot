@@ -13,10 +13,10 @@ class CJob:
   
   @property
   def title(self):
-    # TODO: Impl. title extraction
+    # TODO @1: Impl. title extraction
     return 'Title'
   
   @property
   def budget(self):
-    # TODO: Impl. budget extraction
+    # TODO @1: Impl. budget extraction
     return '--$'

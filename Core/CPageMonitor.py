@@ -1,5 +1,6 @@
 import threading
 
+# TODO #1: Impl. data fetching
 class CPageMonitor(object):
   def __init__(self, configs):
     self._configs = configs
