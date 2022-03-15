@@ -1,4 +1,5 @@
-# TODO: Protect operations with lock
+import threading
+
 class CPageMonitor(object):
   def __init__(self, configs):
     self._configs = configs
@@ -6,21 +7,26 @@ class CPageMonitor(object):
       # UUID: task
     }
     self._interval = configs.RefreshIntervalMinutes
+    self._lock = threading.RLock()
     return
   
   def stop(self, UUID):
-    return self._tasks.pop(UUID, None)
+    with self._lock:
+      task = self._tasks.pop(UUID, None)
+    return task
   
   def start(self, UUID, links, callback):
-    self._tasks[UUID] = {
-      'links': links,
-      'callback': callback,
-      'updated': -1
-    }
+    with self._lock:
+      self._tasks[UUID] = {
+        'links': links,
+        'callback': callback,
+        'updated': -1
+      }
     return
   
   def refresh(self, UUID):
-    if UUID in self._tasks:
-      self._tasks[UUID]['updated'] = -1
-      return True
+    with self._lock:
+      if UUID in self._tasks:
+        self._tasks[UUID]['updated'] = -1
+        return True
     return False
