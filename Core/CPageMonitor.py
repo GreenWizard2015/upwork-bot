@@ -1,7 +1,7 @@
 import threading
+import time
 
-# TODO #1: Impl. data fetching
-class CPageMonitor(object):
+class CPageMonitor():
   def __init__(self, configs):
     self._configs = configs
     self._tasks = {
@@ -9,6 +9,8 @@ class CPageMonitor(object):
     }
     self._interval = configs.RefreshIntervalMinutes
     self._lock = threading.RLock()
+    self._thread = threading.Thread(target=self._monitoringLoop)
+    self._thread.start()
     return
   
   def stop(self, UUID):
@@ -31,3 +33,26 @@ class CPageMonitor(object):
         self._tasks[UUID]['updated'] = -1
         return True
     return False
+  
+  def _monitoringLoop(self):
+    while True:
+      task = self._takeTask()
+      if task:
+        jobs = self._fetch(task.links)
+        task.update(jobs)
+        continue
+      
+      time.sleep(0.1)
+      continue
+    return
+  
+  def _takeTask(self):
+    task = False
+    with self._lock:
+      # TODO: Impl. taking oldest task from pool and wrapping into CMonitoringTask
+      pass
+    return task
+  
+  def _fetch(self, links):
+    # TODO: Impl. fetching jobs from links
+    return []
