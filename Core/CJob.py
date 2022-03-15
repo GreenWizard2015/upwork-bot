@@ -1,12 +1,22 @@
 class CJob:
-  def __init__(self, uuid):
+  def __init__(self, uuid, link):
     self._uuid = uuid
+    self._link = link
     return
   
   def asShortText(self):
-    # TODO: Impl. short job description
-    return ''
+    return ' | '.join(map(str, [self.budget, self.title, self._link]))
   
   @property
   def uuid(self):
     return self._uuid
+  
+  @property
+  def title(self):
+    # TODO: Impl. title extraction
+    return 'Title'
+  
+  @property
+  def budget(self):
+    # TODO: Impl. budget extraction
+    return '--$'
