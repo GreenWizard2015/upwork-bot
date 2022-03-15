@@ -3,6 +3,8 @@ from telegram.ext.messagehandler import MessageHandler
 from telegram.ext.filters import Filters
 from telegram.ext.dispatcher import run_async
 from bot.CEnvironment import CEnvironment
+import re
+from bot.CParsedMessage import CParsedMessage
 
 class CUpworkBot:
   def __init__(self, configs, scraper):
@@ -63,9 +65,7 @@ Commands:
     return
   
   def startLinksMonitoring(self, env):
-    message = env.message
-    # TODO: Extract links from message
-    links = []
+    links = [link for link in CParsedMessage(env.message).links]
     if links:
       self._scraper.start(env.userUUID, links, self._notifyUser(env))
       env.send('Start watching: \n' + '\n'.join(links))
