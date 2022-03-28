@@ -1,5 +1,6 @@
 import threading
 import time
+from Core.CUpworkPage import CUpworkPage
 
 class CPageMonitor():
   def __init__(self, configs):
@@ -54,5 +55,14 @@ class CPageMonitor():
     return task
   
   def _fetch(self, links):
-    # TODO: Impl. fetching jobs from links
-    return []
+    jobs = []
+    for url in links:
+      try:
+        jobs.extend(
+          CUpworkPage(url).jobs()
+        )
+      except Exception as e:
+        # TODO: Use logging module
+        print(url, e)
+      continue
+    return jobs
