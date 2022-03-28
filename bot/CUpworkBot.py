@@ -66,6 +66,7 @@ Commands:
   
   def startLinksMonitoring(self, env):
     links = [link for link in CParsedMessage(env.message).links]
+    # TODO: Convert search links to ajax endpoint
     if links:
       self._scraper.start(env.userUUID, links, self._notifyUser(env))
       env.send('Start watching: \n' + '\n'.join(links))
