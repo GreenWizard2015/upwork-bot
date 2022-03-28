@@ -60,7 +60,6 @@ class CEnvironment:
     return self._context.user_data.get(name, default)
   
   def filterJobs(self, jobs):
-    # TODO: Add tests for jobs filtering OR confirm that context.user_data store data correctly
     oldJobs = self.read('jobs', set())
     newJobs = [x for x in jobs if not(x.uuid in oldJobs)]
     oldJobs.update([x.uuid for x in newJobs])
