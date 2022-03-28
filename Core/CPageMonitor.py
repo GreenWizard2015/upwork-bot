@@ -3,13 +3,19 @@ import time
 from Core.CUpworkPage import CUpworkPage
 
 class CPageMonitor():
-  def __init__(self, configs):
+  def __init__(self, configs, timeProvider=time.time):
     self._configs = configs
     self._tasks = {
       # UUID: task
     }
+    self._time = timeProvider
     self._interval = configs.RefreshIntervalMinutes
     self._lock = threading.RLock()
+    self._thread = None
+    return
+  
+  def startMonitoring(self):
+    assert(self._thread is None)
     self._thread = threading.Thread(target=self._monitoringLoop)
     self._thread.start()
     return
@@ -48,9 +54,15 @@ class CPageMonitor():
     return
   
   def _takeTask(self):
+    # TODO: Add tests 
     task = False
     with self._lock:
-      # TODO: Impl. taking oldest task from pool and wrapping into CMonitoringTask
+      T = self._time()
+      for taskData in self._tasks:
+        if taskData['updated'] < T:
+          T = taskData['updated']
+          task = taskData
+        continue
       pass
     return task
   

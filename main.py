@@ -22,10 +22,10 @@ def main():
 
   updater = Updater(configs.TelegramToken, use_context=True)
 
-  bot = CUpworkBot(
-    configs=configs,
-    scraper=CPageMonitor(configs=configs)
-  )
+  scraper = CPageMonitor(configs=configs)
+  scraper.startMonitoring()
+  
+  bot = CUpworkBot(configs=configs, scraper=scraper)
   bot.bind(updater.dispatcher)
   updater.dispatcher.add_error_handler(error)
 
