@@ -1,6 +1,7 @@
 import threading
 import time
 from Core.CUpworkPage import CUpworkPage
+from Core.CMonitoringTask import CMonitoringTask
 
 class CPageMonitor():
   def __init__(self, configs, timeProvider=time.time):
@@ -63,7 +64,9 @@ class CPageMonitor():
           T = taskData['updated']
           task = taskData
         continue
-      pass
+    
+    if task:
+      task = CMonitoringTask(links=task['links'], consume=self._updateTask(task))
     return task
   
   def _fetch(self, links):
@@ -78,3 +81,10 @@ class CPageMonitor():
         print(url, e)
       continue
     return jobs
+  
+  def _updateTask(self, task):
+    def f(jobs):
+      task['callback'](jobs)
+      task['updated'] = self._time()
+      return 
+    return f

@@ -1,6 +1,7 @@
 class CMonitoringTask:
-  def __init__(self, links):
+  def __init__(self, links, consume):
     self._links = links
+    self._consumeJobs = consume
     return
   
   @property
@@ -8,5 +9,4 @@ class CMonitoringTask:
     return self._links
   
   def update(self, jobs):
-    # TODO: Impl. sending jobs to callback & refreshing task last update time
-    return
+    return self._consumeJobs(jobs)
